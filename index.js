@@ -28,12 +28,15 @@ const handleLoadVideo = async (categoryId) => {
     const response = await fetch(`https://openapi.programming-hero.com/api/videos/category/${categoryId}`)
     const data = await response.json()
     const videoData = data.data
+   
     // console.log(videoData)
+    
+    
     const cardContainer = document.getElementById('card-container')
 
     cardContainer.innerHTML = ""
     videoData.forEach((cardCategory) => {
-        // console.log(cardCategory?.authors?.[0]?.profile_name)
+        // console.log(cardCategory?.authors?.[0].verified)
         const cardDiv = document.createElement('div')
         cardDiv.innerHTML = `
         
@@ -52,9 +55,15 @@ const handleLoadVideo = async (categoryId) => {
 
             </div>
             <div class="">
+                <div class="flex gap-2 items-center">
                 <p class="ml-[51px] text-[14px] font-medium text-[#1b1a1a88] ">
                     ${cardCategory?.authors?.[0]?.profile_name}
                 </p>
+                <div>
+                ${cardCategory?.authors?.[0]?.verified ? `<img src="./images/fi_10629607.png" alt="">` : ""}
+                </div>
+                
+                </div>
                 <p class="pl-[51px] pt-[10px] text-[#1b1a1a88]">${cardCategory?.others?.views} views</p>
             </div>
              
@@ -65,8 +74,18 @@ const handleLoadVideo = async (categoryId) => {
         `
         
         cardContainer.appendChild(cardDiv)
-    })
 
+        
+        
+    })
+    const error = document.getElementById('error')
+    const div = document.createElement("div")
+    div.innerHTML =`
+    <div class="block justify-center -mt-10">${videoData?.length? "" : `<img class="mx-auto" src="./images/Icon.png" alt=""> <br> <h1 class="text-center font-bold text-xl lg:text-3xl">Oops!! Sorry, There is no <br> content here</h1>`  }</div>
+    
+    `
+    error.innerHTML = ""
+  error.appendChild(div)    
     
 
 
@@ -83,5 +102,7 @@ const toggleLoadingSpinner = (isloading) => {
   }
 
 
+
 loadVideo()
 handleLoadVideo(1000)
+
