@@ -8,19 +8,26 @@ const loadVideo = async () => {
     const tabContainer = document.getElementById("tab-container")
 
     video.forEach((category) => {
-        const div = document.createElement('div')
-        div.innerHTML = `
 
-        <button onclick="handleLoadVideo('${category?.category_id}')" class="btn active btn-sm bg-gray hover:bg-[#FF1F3D] text-lg  hover:text-white rounded-md"><a class="tab hover:text-white">${category?.category}</a></button>
+        const div = document.createElement('div')
+        
+        div.innerHTML = `
+        
+        <button onclick="handleLoadVideo('${category?.category_id}') " class="btn active btn-sm bg-gray hover:bg-[#FF1F3D] text-lg  hover:text-white rounded-md"><a class="tab hover:text-white">${category?.category}</a></button>
 
         
+        
         `
+        
+        
         toggleLoadingSpinner(false)
         tabContainer.appendChild(div)
+        
 
 
     });
-
+    
+    
 
 
 }
@@ -147,13 +154,15 @@ const toggleLoadingSpinner = (isloading) => {
 
 
 
+    // sort views
+
 
 const sortByViews=async()=>{
-    
-    const res= await fetch('https://openapi.programming-hero.com/api/videos/category/1000');
+     
+    const res= await fetch(`https://openapi.programming-hero.com/api/videos/category/1000`);
     const data=await res.json();
     const sortData=data.data
- 
+    
     
     
     sortData.sort((a,b)=>{
